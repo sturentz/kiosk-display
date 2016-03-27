@@ -21,15 +21,15 @@
         var nowmin = d.getMinutes();
 
 
-        currenttime = nowhour + nowmin;
+        var currenttime = nowhour + nowmin;
 
 
-        starttime = kioskObj["days"][branchhours][0];
-        endtime = kioskObj["days"][branchhours][1];
+        var starttime = kioskObj["days"][branchhours][0];
+        var endtime = kioskObj["days"][branchhours][1];
 
 
         //branch is currently opened?
-        if (starttime != 0) {
+        if (starttime !== 0) {
             if (currenttime > starttime && currenttime < endtime) {
                 branchstatus = "opened";
             }
@@ -51,10 +51,10 @@
 
 
 
-        checkopened = setInterval(nextdisplay, showdisplay);
+       // checkopened = setInterval(nextdisplay, showdisplay);
+      console.log(showdisplay);
 
-
-        if (branchstatus == "closed") {
+        if (branchstatus === "closed") {
             //do play closed
             playvideo();
 
@@ -66,12 +66,14 @@
 
 
         function playgame() {
+			document.getElementById("content").src="open.html";
             console.log("playgame");
 
         }
 
         function playvideo() {
             console.log("playvideo");
+			document.getElementById("content").src="close.html";
 
         }
 
@@ -95,6 +97,8 @@
         }
 
         function nextdisplay() {
+			
+			console.log("next display");
 
             clearInterval(checkopened);
 
@@ -164,10 +168,10 @@
 
         function getnextdisplay(unittime) {
 
-            hours = Math.floor(unittime);
-            minutes = hours * 60 + Math.ceil(60 - (100 - ((unittime % hours) * 100)));
-            seconds = minutes * 60;
-            milliseconds = seconds * 1000;
+            var hours = Math.floor(unittime);
+            var minutes = hours * 60 + Math.ceil(60 - (100 - ((unittime % hours) * 100)));
+            var seconds = minutes * 60;
+            var milliseconds = seconds * 1000;
 
             return Math.floor(milliseconds);
 
