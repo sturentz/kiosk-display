@@ -1,17 +1,88 @@
 <!doctype html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>close</title>
-<style>
-body{
-	background-color:#06308D;
-}
+<html ng-app="myApp">
 
-</style>
+<head>
+    <meta charset="UTF-8">
+    <title>close</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script type="text/javascript" src="js/object.js"></script>
+
+    <style>
+        html,body {
+			margin:0;
+           
+        }
+		video{
+		 width:100%;	
+		}
+    </style>
 </head>
 
 <body>
-closed
+
+    <video ng-controller="MainCtrl" show-video video-current-time="currentTime" src="videos/Vert_Citigold Relationship_1.mp4" autoplay></video>
+
+
+
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('MainCtrl', function($scope) {
+            $scope.currentTime = 0;
+
+        })
+
+        app.directive('showVideo', function($window, $timeout) {
+            return {
+                scope: {
+                    videoCurrentTime: "=videoCurrentTime"
+
+                },
+                controller: function($scope, $element) {
+                    $scope.videolist = kioskObj.videos;
+                    $scope.currentvideo = 0;
+                    $element[0].src = $scope.videolist[$scope.currentvideo];
+
+                    $scope.onTimeUpdate = function() {
+
+
+                        var currTime = $element[0].currentTime;
+
+
+                        $scope.$apply(function() {
+                            $scope.videoCurrentTime = $element[0].currentTime;
+                        });
+                    }
+                },
+                link: function(scope, elm) {
+                    // Use this $watch to restart the video if it has ended
+                    scope.$watch('videoCurrentTime', function(newVal) {
+
+                        if (elm[0].ended) {
+                            scope.currentvideo++;
+
+
+                            if (scope.currentvideo > scope.videolist.length - 1) {
+                                scope.currentvideo = 0;
+                            }
+
+
+                            elm[0].src = scope.videolist[scope.currentvideo];
+                            //console.log( scope.currentvideo, scope.videolist[scope.currentvideo]);
+                            elm[0].currentTime = 0;
+                            scope.videoCurrentTime = 0;
+                            elm[0].play();
+
+                        }
+                    });
+
+                    elm.bind('timeupdate', scope.onTimeUpdate);
+                }
+            }
+        })
+    </script>
 </body>
+
 </html>

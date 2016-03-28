@@ -12,7 +12,7 @@ var kioskObj={
 	
 	"holidays":[],
 	
-	  "videos":[]
+	  "videos":["videos/Vert_Citigold Relationship_1.mp4","videos/Vert_Hot_topic_Man.mp4","videos/VertCitigold_ClientCenter_Manhattan_v2.mp4"]
 	 
 		
 };
